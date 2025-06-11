@@ -1,0 +1,30 @@
+openapi: 3.1.0
+
+info:
+  title: University of GO.IT
+  version: 1.0.0
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: This is a documentation of University of GO.IT
+
+servers:
+  - url: http://127.0.0.1:8080
+
+tags:
+  - name: Students
+    description: Operation with students
+
+paths:
+  /api/students/{id}:
+    get:
+      $ref: '../swagger/paths/api/students/{id}/get.yaml'
+  /api/students:
+    post:
+      $ref: '../swagger/paths/api/students/post.yaml'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

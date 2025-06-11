@@ -1,0 +1,314 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "University of GO.IT",
+    "version": "1.0.0",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "description": "This is a documentation of University of GO.IT"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8080"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Students",
+      "description": "Operation with students"
+    }
+  ],
+  "paths": {
+    "/api/students/{id}": {
+      "get": {
+        "tags": ["Students"],
+        "summary": "Get student by id",
+        "operationId": "getStudent",
+        "description": "Get student by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "507f1f77bcf86cd799439011"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get student by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "message", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully get student"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/student"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Student not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "message"],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Student not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/api/students": {
+      "post": {
+        "tags": ["Students"],
+        "summary": "Create student",
+        "operationId": "createStudent",
+        "description": "Create student",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "gender", "year", "avatar"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Student name",
+                    "example": "Dave Norton"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "description": "Student gender",
+                    "enum": ["male", "female"],
+                    "example": "male"
+                  },
+                  "year": {
+                    "type": "number",
+                    "description": "Student born year",
+                    "example": 1998
+                  },
+                  "onDuty": {
+                    "type": "boolean",
+                    "description": "Student on duty",
+                    "example": true,
+                    "default": false
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Student avatar"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created a student",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "message", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Student created successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/student"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "student": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "gender",
+          "year",
+          "ownerId",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Student id",
+            "example": "507f191e810c19729de860ea"
+          },
+          "name": {
+            "type": "string",
+            "description": "Student name",
+            "example": "Dave Norton"
+          },
+          "gender": {
+            "type": "string",
+            "description": "Student gender",
+            "enum": ["male", "female"],
+            "example": "male"
+          },
+          "year": {
+            "type": "number",
+            "description": "Student born year",
+            "example": 1998
+          },
+          "onDuty": {
+            "type": "boolean",
+            "description": "Student on on duty",
+            "example": true,
+            "default": false
+          },
+          "ownerId": {
+            "type": "string",
+            "description": "Student owner id",
+            "example": "6592008029c8c3e4dc76256c"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "url",
+            "description": "Student avatar url",
+            "example": "https://res.cloudinary.com/dha4xvgfi/image/upload/v1749060633/mef8zwaq73iedpo4owut.png"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Student created at",
+            "example": "2025-03-27T19:43:21.686+00:00"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Student updated at",
+            "example": "2025-03-28T19:43:21.686+00:00"
+          }
+        }
+      }
+    },
+    "responses": {
+      "401": {
+        "description": "Unauthorized Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": ["status", "message", "data"],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Unauthorized Error"
+                },
+                "data": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Access token not provided"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": ["status", "message"],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+type: object
+required:
+  - _id
+  - name
+  - gender
+  - year
+  - ownerId
+  - createdAt
+  - updatedAt
+properties:
+  _id:
+    type: string
+    description: Student id
+    example: 507f191e810c19729de860ea
+  name:
+    type: string
+    description: Student name
+    example: Dave Norton
+  gender:
+    type: string
+    description: Student gender
+    enum: ['male', 'female']
+    example: male
+  year:
+    type: number
+    description: Student born year
+    example: 1998
+  onDuty:
+    type: boolean
+    description: Student on on duty
+    example: true
+    default: false
+  ownerId:
+    type: string
+    description: Student owner id
+    example: 6592008029c8c3e4dc76256c
+  avatar:
+    type: string
+    format: url
+    description: Student avatar url
+    example: https://res.cloudinary.com/dha4xvgfi/image/upload/v1749060633/mef8zwaq73iedpo4owut.png
+  createdAt:
+    type: string
+    format: date-time
+    description: Student created at
+    example: 2025-03-27T19:43:21.686+00:00
+  updatedAt:
+    type: string
+    format: date-time
+    description: Student updated at
+    example: 2025-03-28T19:43:21.686+00:00
